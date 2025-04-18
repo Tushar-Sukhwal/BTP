@@ -163,6 +163,11 @@ io.on("connection", (socket) => {
   });
 });
 
+// get request for root 
+app.get("/", (req, res) => {
+  res.send("WebRTC Signaling Server");
+});
+
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
