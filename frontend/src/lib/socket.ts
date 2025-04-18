@@ -6,7 +6,7 @@ export const connectSocket = (): Socket => {
   if (!socket) {
     socket = io(
       process.env.NEXT_PUBLIC_SOCKET_URL ||
-        "https://earliest-lifestyle-legs-faqs.trycloudflare.com"
+        "http://localhost:9000",
     );
   }
   return socket;

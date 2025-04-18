@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useSearchParams } from "next/navigation";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { connectSocket, disconnectSocket } from "@/lib/socket";
 import { initializeViewer } from "@/lib/webrtc";
 
-export default function ViewerPage() {
+// Component that uses useSearchParams
+function ViewerWithSearchParams() {
   const searchParams = useSearchParams();
-  const [roomId, setRoomId] = useState<string>(
-    searchParams?.get("roomId") || ""
-  );
+  const initialRoomId = searchParams?.get("roomId") || "";
+  const [roomId, setRoomId] = useState<string>(initialRoomId);
   const [userId] = useState<string>(uuidv4());
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [isConnected, setIsConnected] = useState<boolean>(false);
@@ -71,7 +71,7 @@ export default function ViewerPage() {
 
   // Auto-join if room ID is provided in URL
   useEffect(() => {
-    if (roomId && !isConnected) {
+    if (initialRoomId && !isConnected) {
       joinRoom();
     }
 
@@ -139,5 +139,23 @@ export default function ViewerPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Main component that wraps the viewer with Suspense
+export default function ViewerPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col items-center justify-center p-4">
+          <h1 className="text-3xl font-bold mb-6">Watch Live Stream</h1>
+          <div className="flex items-center justify-center h-64 w-full max-w-md bg-gray-100 dark:bg-gray-800 rounded-lg">
+            <p className="text-xl">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <ViewerWithSearchParams />
+    </Suspense>
   );
 }
