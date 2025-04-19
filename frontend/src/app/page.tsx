@@ -457,7 +457,7 @@ export default function Home() {
             value="All"
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {Object.entries(events).flatMap(([_, categoryEvents]) =>
+            {Object.entries(events).flatMap(([, categoryEvents]) =>
               categoryEvents.map((event, index) => (
                 <EventCard key={`all-${index}`} event={event} />
               ))
