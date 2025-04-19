@@ -3,6 +3,8 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import { UserConnection } from "./types";
+import uploadRoutes from "./routes/uploadRoutes";
+import compressionRoutes from "./routes/compressionRoutes";
 
 const app = express();
 const server = http.createServer(app);
@@ -13,7 +15,12 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: "*",
+    methods: ["GET", "POST"],
+  }
+));
 
 const PORT = process.env.PORT || 9000;
 
@@ -163,10 +170,13 @@ io.on("connection", (socket) => {
   });
 });
 
-// get request for root 
+// get request for root
 app.get("/", (req, res) => {
   res.send("WebRTC Signaling Server");
 });
+
+app.use("/api/upload", uploadRoutes);
+app.use("/compression", compressionRoutes);
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
