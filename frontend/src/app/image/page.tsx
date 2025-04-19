@@ -269,11 +269,16 @@ const ImageProcessor = () => {
                 <h4 className="font-medium text-lg mb-2">Original Image</h4>
                 <div className="flex items-start space-x-4">
                   <div className="w-1/3">
-                    <img
-                      src={`${apiUrl}/uploads/${comparisonResults.originalImage}`}
-                      alt="Original"
-                      className="w-full rounded-md shadow-sm"
-                    />
+                    {preview ? (
+                      <img
+                        // src={`${apiUrl}/uploads/${comparisonResults.originalImage}`}
+                        src={preview}
+                        alt="Original"
+                        className="w-full rounded-md shadow-sm"
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">
@@ -298,15 +303,20 @@ const ImageProcessor = () => {
                     </div>
                     <div className="p-4">
                       <div className="mb-4">
-                        <img
-                          src={
-                            result.outputPath
-                              ? getImageUrl(result.outputPath)
-                              : `${apiUrl}/processed/${imageId}/${result.file}`
-                          }
-                          alt={`${result.algorithm} compressed`}
-                          className="w-full rounded-md"
-                        />
+                        {preview ? (
+                          <img
+                            // src={
+                            //   result.outputPath
+                            //     ? getImageUrl(result.outputPath)
+                            //     : `${apiUrl}/processed/${imageId}/${result.file}`
+                            // }
+                            src={preview}
+                            alt={`${result.algorithm} compressed`}
+                            className="w-full rounded-md"
+                          />
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div className="bg-gray-100 p-2 rounded">
