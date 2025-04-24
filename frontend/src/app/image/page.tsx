@@ -159,9 +159,9 @@ const ImageProcessor = () => {
     { value: "apubt3-nup", label: "APUBT3-NUP" },
   ];
 
-  const getImageUrl = (path: string) => {
-    return `${apiUrl}/${path}`;
-  };
+  // const getImageUrl = (path: string) => {
+  //   return `${apiUrl}/${path}`;
+  // };
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -290,7 +290,7 @@ const ImageProcessor = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {comparisonResults.results.map((result, index) => (
                   <div
                     key={index}
